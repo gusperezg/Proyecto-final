@@ -100,12 +100,6 @@
 .color{
     color:#3498DB  ;
 }
-.naranja{
-    color:orange;
-}
-.card-body{
-    height:200px;
-}
 </style>
         <div class="col-lg-9">
 
@@ -130,18 +124,17 @@
                 $id=$row['album'];
         echo "<div class='col-lg-3 col-md-6 mb-4'>";
         echo "<div class='card'>"; 
-        echo "<a href='producto.php?a=$id'>";
         echo "<img class='card-img-top' src='" . $row['imagen'] . "'>";
         echo "<div class='card-body'>";
         echo "<h4 class='card-title'>";
-        
+        echo "<a href='pruebita.php?a=$id'>";
             echo $row['album'];
         echo "</a>";
         echo "</h4>";
         echo "<h3>";
         echo $row['artista'];
         echo "</h3>";
-        echo "<h5 class='naranja'>";
+        echo "<h5>";
         echo "$";
         echo $row['precio'];
                 echo "MX";
@@ -154,7 +147,7 @@
         echo "</div>";
         echo " <div class='card-footer'>";
 
-       echo "<small class='text-muted'>&#9733; &#9733; &#9733; &#9733; &#973".rand(3, 4)."</small>&nbsp; &nbsp;";
+       echo "<small class='text-muted'>&#9733; &#9733; &#9733; &#9733; &#9733;</small>&nbsp; &nbsp;";
         echo "<a href='#' class='btn btn-primary'>Comprar</a>";
         echo "</div>";
          echo  "</div>";

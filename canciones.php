@@ -18,7 +18,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" type="image/png" href="music.png" />
-    <title>Albumes</title>
+    <title>Canciones</title>
 
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -29,9 +29,8 @@
   </head>
 
   <body>
-
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+      <!-- Barra de Arriba -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
       <div class="container">
         <a class="navbar-brand" href="#">Rythm</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -59,8 +58,7 @@
     </nav>
     <br><br>
 
-      <!-- Jumbotron Header -->
-      <div class="container">
+       <div class="container">
 
 <div class="row">
 
@@ -69,16 +67,17 @@
     <h1 class="my-4">Rythm</h1>
     <div class="list-group">
       <a href="index.php" class="list-group-item ">Inicio</a>
-      <a href="albumes.php" class="list-group-item active">Albumes</a>
+      <a href="albumes.php" class="list-group-item">Albumes</a>
       <a href="artistas.php" class="list-group-item">Artistas</a>
-      <a href="canciones.php" class="list-group-item">Canciones</a>
+      <a href="canciones.php" class="list-group-item active">Canciones</a>
     </div>
 
   </div>
+
 <style>
 .parallax { 
     /* The image used */
-    background-image: url("bebe.jpg");
+    background-image: url("halsey.jpg");
 
     /* Set a specific height */
     width: 840px;
@@ -98,79 +97,55 @@
     
 }
 .color{
-    color:#3498DB  ;
+    color:white;
 }
-.naranja{
-    color:orange;
-}
-.card-body{
-    height:200px;
-}
+
 </style>
         <div class="col-lg-9">
-
-
-  <div class="parallax">
-      <div class="text-center">
+<div class="parallax">
+    <div class="text-center">
           
-      <h1 class="texto">Albumes</h1>
+      <h1 class="texto">Canciones</h1>
+      <h3 class="color">Top Charts</h3>
 
+    </div>
 </div>
 </div>
 <br><br>
+
+<div class="container">
+<br>
+<table class="table table-striped table-hover">
+    <tr><th>Imagen</th><th>Posición</th><th>Nombre</th><th>Artista</th><th>Album</th></tr>
+    <?php
+    $result = mysqli_query($con,"SELECT a.imagen, c.nombre cancion, ar.nombre artista, a.nombre album from canciones c, artista ar, album a where c.idArtista=ar.idArtista and c.idAlbum=a.idAlbum order by c.nombre;");
+    $contador=1;
+    while($row = mysqli_fetch_array($result)) {
+        echo "<tr>";
+        echo "<td><img src='" . $row['imagen'] . "' width='100px'></td>";
+        echo "<td>" . $contador++ . "</td>";
+        echo "<th>" . $row['cancion'] . "</th>";
+        echo "<td>" . $row['artista'] . "</td>";
+        echo "<td>" . $row['album'] . "</td>";
+        echo "<tr>";
+    }
+
+    ?>
+</table>
+
+
+
+
 </div>
-      <!-- Tarjetas de los Discos -->
-      <div class="row text-center">
-          <!-- Ariana Grande -->
-        
-          <?php
-              $result = mysqli_query($con,"SELECT imagen, a.nombre album, ar.nombre artista, precio, descripcion FROM album a, artista ar where a.idArtista=ar.idArtista;");
-              while($row = mysqli_fetch_array($result)) {
-
-                $id=$row['album'];
-        echo "<div class='col-lg-3 col-md-6 mb-4'>";
-        echo "<div class='card'>"; 
-        echo "<a href='producto.php?a=$id'>";
-        echo "<img class='card-img-top' src='" . $row['imagen'] . "'>";
-        echo "<div class='card-body'>";
-        echo "<h4 class='card-title'>";
-        
-            echo $row['album'];
-        echo "</a>";
-        echo "</h4>";
-        echo "<h3>";
-        echo $row['artista'];
-        echo "</h3>";
-        echo "<h5 class='naranja'>";
-        echo "$";
-        echo $row['precio'];
-                echo "MX";
-        echo "</h5>";
-
-
-        echo " <p class='card-text'>";
-        echo $row['descripcion'];
-        echo "</p>";
-        echo "</div>";
-        echo " <div class='card-footer'>";
-
-       echo "<small class='text-muted'>&#9733; &#9733; &#9733; &#9733; &#973".rand(3, 4)."</small>&nbsp; &nbsp;";
-        echo "<a href='#' class='btn btn-primary'>Comprar</a>";
-        echo "</div>";
-         echo  "</div>";
-
-        echo "</div>";
-                        }
-                        ?>
 
 
 
 
 
 
-    </div>
-    
-    <!-- /.container -->
+
+
+
 
     <!-- Footer -->
     <div class="container">
@@ -185,7 +160,8 @@
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-  </body>
+
+</body>
 
   <?php
 mysqli_close($con);

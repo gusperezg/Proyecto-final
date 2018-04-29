@@ -18,7 +18,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" type="image/png" href="music.png" />
-    <title>Albumes</title>
+    <title>Artistas</title>
 
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -29,9 +29,8 @@
   </head>
 
   <body>
-
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+      <!-- Barra de Arriba -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
       <div class="container">
         <a class="navbar-brand" href="#">Rythm</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -59,8 +58,7 @@
     </nav>
     <br><br>
 
-      <!-- Jumbotron Header -->
-      <div class="container">
+       <div class="container">
 
 <div class="row">
 
@@ -69,19 +67,20 @@
     <h1 class="my-4">Rythm</h1>
     <div class="list-group">
       <a href="index.php" class="list-group-item ">Inicio</a>
-      <a href="albumes.php" class="list-group-item active">Albumes</a>
-      <a href="artistas.php" class="list-group-item">Artistas</a>
+      <a href="albumes.php" class="list-group-item">Albumes</a>
+      <a href="artistas.php" class="list-group-item active">Artistas</a>
       <a href="canciones.php" class="list-group-item">Canciones</a>
     </div>
 
   </div>
+
 <style>
 .parallax { 
     /* The image used */
-    background-image: url("bebe.jpg");
+    background-image: url("troyes.jpg");
 
     /* Set a specific height */
-    width: 840px;
+    width: 868px;
     height: 400px; 
 
     /* Create the parallax scrolling effect */
@@ -97,87 +96,85 @@
     padding-top:20%
     
 }
-.color{
-    color:#3498DB  ;
+.contenedor{
+    position: relative;
+    display: inline-block;
+    text-align: center;
 }
-.naranja{
-    color:orange;
+ 
+.texto-encima{
+    position: absolute;
+    top: 10px;
+    left: 10px;
 }
-.card-body{
-    height:200px;
+.centrado{
+    position: absolute;
+    color:white;
+    font-size:40px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
 }
+.imagen{
+    width:300px;
+    height:300px;
+}
+.contenedor{
+    width:100%;
+}
+
 </style>
         <div class="col-lg-9">
-
-
-  <div class="parallax">
-      <div class="text-center">
+<div class="parallax">
+    <div class="text-center">
           
-      <h1 class="texto">Albumes</h1>
+      <h1 class="texto">Artistas</h1>
 
+    </div>
 </div>
 </div>
 <br><br>
+
+<div class="container">
+<br>
+
+
+
 </div>
-      <!-- Tarjetas de los Discos -->
-      <div class="row text-center">
-          <!-- Ariana Grande -->
-        
-          <?php
-              $result = mysqli_query($con,"SELECT imagen, a.nombre album, ar.nombre artista, precio, descripcion FROM album a, artista ar where a.idArtista=ar.idArtista;");
-              while($row = mysqli_fetch_array($result)) {
+<div class="container">
 
-                $id=$row['album'];
-        echo "<div class='col-lg-3 col-md-6 mb-4'>";
-        echo "<div class='card'>"; 
-        echo "<a href='producto.php?a=$id'>";
-        echo "<img class='card-img-top' src='" . $row['imagen'] . "'>";
-        echo "<div class='card-body'>";
-        echo "<h4 class='card-title'>";
-        
-            echo $row['album'];
-        echo "</a>";
-        echo "</h4>";
-        echo "<h3>";
-        echo $row['artista'];
-        echo "</h3>";
-        echo "<h5 class='naranja'>";
-        echo "$";
-        echo $row['precio'];
-                echo "MX";
-        echo "</h5>";
+ <div class="row">
+     
+     <?php
+ $result = mysqli_query($con,"SELECT a.imagen, ar.nombre from album a, artista ar where a.idArtista=ar.idArtista;");
+ while($row = mysqli_fetch_array($result)) {
+        echo "<div class='col-md-3 col-sm-6 mb-4'>";
+            echo "<div class='contenedor'>";
+        echo "<img class='imagen' src='"  . $row['imagen'] ."'>";
+  echo "<div class='centrado'>" . $row['nombre'] . "</div>";
+    echo "</div>";
 
-
-        echo " <p class='card-text'>";
-        echo $row['descripcion'];
-        echo "</p>";
-        echo "</div>";
-        echo " <div class='card-footer'>";
-
-       echo "<small class='text-muted'>&#9733; &#9733; &#9733; &#9733; &#973".rand(3, 4)."</small>&nbsp; &nbsp;";
-        echo "<a href='#' class='btn btn-primary'>Comprar</a>";
-        echo "</div>";
-         echo  "</div>";
-
-        echo "</div>";
-                        }
-                        ?>
+echo "</div>";
+ }
+?>
+</div>
+</div>
 
 
 
 
 
 
-    </div>
-    
-    <!-- /.container -->
+
 
     <!-- Footer -->
-    <div class="container">
+    <div class="contenedor">
     <footer class="py-5 bg-dark">
-      <div class="container">
+
         <p class="m-0 text-center text-white">Copyright &copy; Your Website 2018</p>
       </div>
+
       <!-- /.container -->
     </footer>
 
@@ -185,7 +182,8 @@
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-  </body>
+
+</body>
 
   <?php
 mysqli_close($con);

@@ -70,8 +70,8 @@
           <div class="list-group">
             <a href="index.php" class="list-group-item active">Inicio</a>
             <a href="albumes.php" class="list-group-item">Albumes</a>
-            <a href="#" class="list-group-item">Artistas</a>
-            <a href="#" class="list-group-item">Canciones</a>
+            <a href="artistas.php" class="list-group-item">Artistas</a>
+            <a href="canciones.php" class="list-group-item">Canciones</a>
           </div>
 
         </div>
@@ -124,7 +124,7 @@
             <center><h1 class="my-3">Nuevos Lanzamientos</h1></center><br>
 
           <div class="row">
-<!-- Ariana grande -->
+<!-- Tarjeta 1 -->
             <div class="col-lg-4 col-md-6 mb-4">
               <div class="card h-100">
               <?php
@@ -178,7 +178,7 @@
               </div>
             </div>
 
-<!-- Lana del Rey -->
+<!-- Tarjeta 2 -->
 <div class="col-lg-4 col-md-6 mb-4">
               <div class="card h-100">
               <?php
@@ -231,11 +231,11 @@
                 </div>
               </div>
             </div>
-<!-- Halsey -->
+<!-- Tarjeta 3 -->
 <div class="col-lg-4 col-md-6 mb-4">
               <div class="card h-100">
               <?php
-                         $result = mysqli_query($con,"SELECT imagen FROM album where idArtista=3;");
+                         $result = mysqli_query($con,"SELECT imagen FROM album where idArtista=6;");
                          ?>
                 <a href="#"><img class="card-img-top" src="<?php
                 while($row = mysqli_fetch_array($result)) {
@@ -247,7 +247,7 @@
                   <h4 class="card-title">
                     <a href="#">
                         <?php
-                         $result = mysqli_query($con,"SELECT nombre FROM artista where idArtista=3;");
+                         $result = mysqli_query($con,"SELECT nombre FROM artista where idArtista=6;");
                          while($row = mysqli_fetch_array($result)) {
                            echo $row['nombre'];
                          }
@@ -256,7 +256,7 @@
                   </h4>
                   <h3>
                   <?php
-                         $result = mysqli_query($con,"SELECT nombre FROM album where idArtista=3;");
+                         $result = mysqli_query($con,"SELECT nombre FROM album where idArtista=6;");
                          while($row = mysqli_fetch_array($result)) {
                            echo $row['nombre'];
                          }
@@ -264,7 +264,7 @@
                   </h3>
                   <p class="card-text">
                   <?php
-                         $result = mysqli_query($con,"SELECT descripcion FROM album where idArtista=3;");
+                         $result = mysqli_query($con,"SELECT descripcion FROM album where idArtista=6;");
                          while($row = mysqli_fetch_array($result)) {
                            echo $row['descripcion'];
                          }
@@ -272,7 +272,7 @@
                   </p>
                   <h5>
                   $<?php
-                         $result = mysqli_query($con,"SELECT precio FROM album where idArtista=3;");
+                         $result = mysqli_query($con,"SELECT precio FROM album where idArtista=6;");
                          while($row = mysqli_fetch_array($result)) {
                            echo $row['precio'];
                          }
@@ -306,7 +306,7 @@
 <style>
 .parallax { 
     /* The image used */
-    background-image: url("coldplay.jpg");
+    background-image: url("halsey.jpg");
 
     /* Set a specific height */
     height: 500px; 
@@ -341,7 +341,7 @@
     <a href="#" class="nav-link">
         <div class="text-center">
             
-    <button class="btn">Coldplay</button><br><br>
+    <button class="btn">Halsey</button><br><br>
    
     <h4>
         Nuevo Album
