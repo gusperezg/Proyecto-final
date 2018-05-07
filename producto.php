@@ -9,6 +9,7 @@
   if (mysqli_connect_errno()) {
     echo "Failed to connect to MySQL: " . mysqli_connect_error();
   }
+  session_start();
 ?>
 
   <head>
@@ -49,14 +50,39 @@
                 
               </a>
             </li>
+            <?php
+                if(isset($_SESSION['nombre'])){
+            echo "<li class='nav-item'>";
+            echo "<a class='nav-link' >";
+            echo "Bienvenido " . $_SESSION['nombre'];
+            echo "</a>";
+            echo "</li>";
+                }
+            ?>
             <li class="nav-item">
-              <a class="nav-link" href="#">Iniciar Sesion</a>
+            <?php
+                if(!isset($_SESSION['nombre'])){
+              echo "<a class='nav-link' href='sesion.php'>" . "Iniciar Sesión" . "</a>";
+                }
+                else{
+                    echo "<a class='nav-link' href='cerrar.php'>" . "Cerrar Sesión" . "</a>";
+                }?>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Carrito</a>
+              <a class="nav-link" href="carrito.php">Carrito &nbsp; <?php
+                  if(isset($_SESSION['nombre'])){
+                  echo "<span class='badge badge-info'>" . $_SESSION['articulos']. "</span>";
+                  }
+                  else{
+                    echo "<span class='badge badge-info'>0</span>";
+                  }
+                  ?></a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#">Contacto</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="redirecciona.php">Administrador</a>
             </li>
           </ul>
         </div>
@@ -120,8 +146,9 @@
         <th>Numero</th>
         <th>Nombre</th>
         </tr>";
-        $resultado = mysqli_query($con,"SELECT c.nombre cancion from canciones c, album a where c.idAlbum=a.idAlbum and a.nombre='". $a ."' ;");
+        $resultado = mysqli_query($con,"SELECT c.nombre cancion, a.idAlbum id from canciones c, album a where c.idAlbum=a.idAlbum and a.nombre='". $a ."' ;");
         while($row = mysqli_fetch_array($resultado)) {
+            $idAlbum=$row['id'];
             echo "<tr>";
             echo "<td>" . $contador++ . "</td>";
             echo "<td>" . $row['cancion'] . "</td>";
@@ -133,7 +160,7 @@
         echo "</table>";
 
         echo "<div class='contenedor1'>";
-    echo "<a href='albumes.php'>";
+    echo "<a href='carrito.php?a=$idAlbum'>";
     echo "<button type='button' class='btn btn-primary'>" . 'Comprar' . "</button>";
     echo "</a>";
     echo "</div>";

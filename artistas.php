@@ -9,6 +9,7 @@
   if (mysqli_connect_errno()) {
     echo "Failed to connect to MySQL: " . mysqli_connect_error();
   }
+  session_start();
 ?>
 
   <head>
@@ -43,14 +44,39 @@
                 
               </a>
             </li>
+            <?php
+                if(isset($_SESSION['nombre'])){
+            echo "<li class='nav-item'>";
+            echo "<a class='nav-link' >";
+            echo "Bienvenido " . $_SESSION['nombre'];
+            echo "</a>";
+            echo "</li>";
+                }
+            ?>
             <li class="nav-item">
-              <a class="nav-link" href="#">Iniciar Sesion</a>
+            <?php
+                if(!isset($_SESSION['nombre'])){
+              echo "<a class='nav-link' href='sesion.php'>" . "Iniciar Sesión" . "</a>";
+                }
+                else{
+                    echo "<a class='nav-link' href='cerrar.php'>" . "Cerrar Sesión" . "</a>";
+                }?>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Carrito</a>
+              <a class="nav-link" href="carrito.php">Carrito &nbsp; <?php
+                  if(isset($_SESSION['nombre'])){
+                  echo "<span class='badge badge-info'>" . $_SESSION['articulos']. "</span>";
+                  }
+                  else{
+                    echo "<span class='badge badge-info'>0</span>";
+                  }
+                  ?></a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#">Contacto</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="redirecciona.php">Administrador</a>
             </li>
           </ul>
         </div>

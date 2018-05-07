@@ -8,6 +8,9 @@
   if (mysqli_connect_errno()) {
     echo "Failed to connect to MySQL: " . mysqli_connect_error();
   }
+
+  session_start();
+
 ?>
    
   <head>
@@ -43,16 +46,42 @@
               <a class="nav-link" href="#">Inicio
                 <span class="sr-only">(current)</span>
               </a>
+            </li><?php
+                if(isset($_SESSION['nombre'])){
+            echo "<li class='nav-item'>";
+            echo "<a class='nav-link' >";
+            echo "Bienvenido " . $_SESSION['nombre'];
+            echo "</a>";
+            echo "</li>";
+                }
+            ?>
+            <li class="nav-item">
+                <?php
+                if(!isset($_SESSION['nombre'])){
+              echo "<a class='nav-link' href='sesion.php'>" . "Iniciar Sesión" . "</a>";
+                }
+                else{
+                    echo "<a class='nav-link' href='cerrar.php'>" . "Cerrar Sesión" . "</a>";
+                }?>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Iniciar Sesión</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Carrito</a>
+              <a class="nav-link" href="carrito.php">Carrito &nbsp; 
+              <?php
+                  if(isset($_SESSION['nombre'])){
+                  echo "<span class='badge badge-info'>" . $_SESSION['articulos']. "</span>";
+                  }
+                  else{
+                    echo "<span class='badge badge-info'>0</span>";
+                  }
+                  ?>
+              </a>
              
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#">Contacto</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="redirecciona.php">Administrador</a>
             </li>
           </ul>
         </div>
@@ -129,8 +158,10 @@
               <div class="card h-100">
               <?php
                          $result = mysqli_query($con,"SELECT imagen FROM album where idArtista=1;");
-                         ?>
-                <a href="#"><img class="card-img-top" src="<?php
+                         
+                echo "<a href='producto.php?a=No tears left to cry'>";
+                ?>
+                    <img class="card-img-top" src="<?php
                 while($row = mysqli_fetch_array($result)) {
                     echo $row['imagen'];
                   }
@@ -183,8 +214,10 @@
               <div class="card h-100">
               <?php
                          $result = mysqli_query($con,"SELECT imagen FROM album where idArtista=2;");
+                         
+                         echo "<a href='producto.php?a=Melodrama'>";
                          ?>
-                <a href="#"><img class="card-img-top" src="<?php
+                         <img class="card-img-top" src="<?php
                 while($row = mysqli_fetch_array($result)) {
                     echo $row['imagen'];
                   }
@@ -236,8 +269,10 @@
               <div class="card h-100">
               <?php
                          $result = mysqli_query($con,"SELECT imagen FROM album where idArtista=6;");
-                         ?>
-                <a href="#"><img class="card-img-top" src="<?php
+                         
+                         echo "<a href='producto.php?a=Dont Kill My Vibe EP'>";
+                ?>
+                <img class="card-img-top" src="<?php
                 while($row = mysqli_fetch_array($result)) {
                     echo $row['imagen'];
                   }
@@ -338,7 +373,7 @@
 </style>
 <!-- dentro de la imagen -->
     <div class="parallax">
-    <a href="#" class="nav-link">
+    <?php  echo "<a href='producto.php?a=Hopeless Fountain Kingdom' class='nav-link'>"; ?> 
         <div class="text-center">
             
     <button class="btn">Halsey</button><br><br>

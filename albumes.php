@@ -2,6 +2,8 @@
 <html>
 
 <?php
+
+
   // Crear una conexión
   $con = mysqli_connect("localhost","root","","rythm");
 
@@ -9,6 +11,8 @@
   if (mysqli_connect_errno()) {
     echo "Failed to connect to MySQL: " . mysqli_connect_error();
   }
+
+  session_start();
 ?>
 
   <head>
@@ -44,14 +48,39 @@
                 
               </a>
             </li>
+            <?php
+                if(isset($_SESSION['nombre'])){
+            echo "<li class='nav-item'>";
+            echo "<a class='nav-link' >";
+            echo "Bienvenido " . $_SESSION['nombre'];
+            echo "</a>";
+            echo "</li>";
+                }
+            ?>
             <li class="nav-item">
-              <a class="nav-link" href="#">Iniciar Sesion</a>
+            <?php
+                if(!isset($_SESSION['nombre'])){
+              echo "<a class='nav-link' href='sesion.php'>" . "Iniciar Sesión" . "</a>";
+                }
+                else{
+                    echo "<a class='nav-link' href='cerrar.php'>" . "Cerrar Sesión" . "</a>";
+                }?>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Carrito</a>
+              <a class="nav-link" href="carrito.php">Carrito &nbsp; <?php
+                  if(isset($_SESSION['nombre'])){
+                  echo "<span class='badge badge-info'>" . $_SESSION['articulos'] . "</span>";
+                  }
+                  else{
+                    echo "<span class='badge badge-info'>0</span>";
+                  }
+                  ?></a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#">Contacto</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="redirecciona.php">Administrador</a>
             </li>
           </ul>
         </div>
@@ -107,6 +136,15 @@
     height:200px;
 }
 </style>
+
+<script>
+function mFunction() {
+    <?php
+    $_SESSION['articulos'] = ((int) $_SESSION['articulos'] + 1);
+    ?>
+}
+
+ </script>   
         <div class="col-lg-9">
 
 
@@ -124,10 +162,11 @@
           <!-- Ariana Grande -->
         
           <?php
-              $result = mysqli_query($con,"SELECT imagen, a.nombre album, ar.nombre artista, precio, descripcion FROM album a, artista ar where a.idArtista=ar.idArtista;");
+              $result = mysqli_query($con,"SELECT imagen, a.nombre album, ar.nombre artista, precio, descripcion, a.idAlbum id FROM album a, artista ar where a.idArtista=ar.idArtista;");
               while($row = mysqli_fetch_array($result)) {
 
                 $id=$row['album'];
+                $idAlbum=$row['id'];
         echo "<div class='col-lg-3 col-md-6 mb-4'>";
         echo "<div class='card'>"; 
         echo "<a href='producto.php?a=$id'>";
@@ -155,7 +194,7 @@
         echo " <div class='card-footer'>";
 
        echo "<small class='text-muted'>&#9733; &#9733; &#9733; &#9733; &#973".rand(3, 4)."</small>&nbsp; &nbsp;";
-        echo "<a href='#' class='btn btn-primary'>Comprar</a>";
+        echo "<a href='carrito.php?a=$idAlbum' onclick='mFunction()' class='btn btn-primary'>Comprar</a>";
         echo "</div>";
          echo  "</div>";
 
