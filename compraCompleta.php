@@ -25,6 +25,7 @@
 
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    
 
     <!-- Custom styles for this template -->
     <link href="css/shop-homepage.css" rel="stylesheet">
@@ -80,58 +81,99 @@
       </div>
     </nav><br><br>
 
+<style>
+h3{
+    color:#2874A6;
+}
+
+
+</style>
+
+
 <div class="container">
 
-            <div class="jumbotron">
-            <h2>Iniciar Sesión</h2><br>
-  <form action="redirecciona.php" method="post">
+<div class="row">
+<div class="col-lg-2">
 
-    <div class="form-group">
-      <label for="Email">Usuario</label>
-      <input type="text" class="form-control" id="text" placeholder="Ingrese Usuario" name="usuario">
-    </div>
-    <div class="form-group">
-      <label for="pwd">Contraseña:</label>
-      <input type="password" class="form-control" id="pwd" placeholder="Ingrese Contraseña" name="contrasena">
-    </div>
-    <br>
-    <div class="boton">
-    <button type="submit" class="btn btn-default">Enviar</button>
+</div>
+<div class="jumbotron">
+<center>
+  <div class="col-lg-9">
+    <h1>Se realizó la compra Correctamente</h1>
+    <img src="palomita.png" width=130px>
     <br><br>
+    <h3>Articulos Comprados</h3>
+    <br>
+    <?php
+    error_reporting(0);
+    $id=$_SESSION['id_usuario'];
+    $idAlbum="";
+    $total="";
+    $cantidad="";
+     $result = mysqli_query($con,"SELECT imagen, a.nombre album, ar.nombre artista, precio, ca.cantidad, a.idAlbum id from album a, artista ar, carrito ca where a.idAlbum=ca.idAlbum and a.idArtista=ar.idArtista and idUsuario=$id;");
+     $contador=1;
+     echo "<div class='contenedor'>";
+   echo "<table class='table table-striped table-hover'>";
+   echo "<tr><th>Imagen</th><th>Articulo</th><th>Artista</th><th>Album</th><th>Cantidad</th><th>Precio</th></tr>";
+ 
+   
+
+ while($row = mysqli_fetch_array($result)) {
+     echo "<tr>";
+     echo "<td><img src='" . $row['imagen'] . "' width='100px'></td>";
+     echo "<td>" . $contador++ . "</td>";
+     echo "<td>" . $row['artista'] . "</td>";
+     echo "<td>" . $row['album'] . "</td>";
+     echo "<td>" . $row['cantidad'] . "</td>";
+     echo "<td width='150px'> $" . $row['precio'] . " MX </td>";
+     echo "<tr>";
+     $total+=($row['cantidad'] * $row['precio']);
+     $idAlbum=$row['id'];
+     $cantidad=$row['cantidad'];
+
+    $sql="INSERT into historial (idAlbum, idUsuario, cantidad) values ('$idAlbum', '$id', '$cantidad')";
+    if (!mysqli_query($con,$sql)) {
+        die('Error: ' . mysqli_error($con));
+       }
+
+       $resultado = mysqli_query($con,"SELECT cantidad from album where idAlbum='$idAlbum';");
+       while($row1 = mysqli_fetch_array($resultado)) {
+           $cant=$row1['cantidad']-$cantidad;
+        $sql="UPDATE album set cantidad='$cant' where idAlbum='$idAlbum'";
+        if (!mysqli_query($con,$sql)) {
+            die('Error: ' . mysqli_error($con));
+           }
+       }
+
+    $sql="DELETE from carrito where idUsuario='$id'";
+    if (!mysqli_query($con,$sql)) {
+        die('Error: ' . mysqli_error($con));
+       }
+       
+ }
+
+ echo "<tr><td></td><td></td><td></td><td></td><td>TOTAL</td><td> $" . $total . " MX</td></tr>";
+ echo "</table>";
+
+
+    ?>
+
+   <center> <a href="index.php"><button  class="btn btn-success">Regresar</button></a> </center>
     </div>
+</center>
 </div>
 
-<?php
-error_reporting(0);
-$usuario=$_POST['usuario'];
-$contrasena=$_POST['contrasena'];
 
-if($usuario!=null){
-if($usuario=='admin' && $contrasena=='soyeladmin'){
-    echo  "<div class='alert alert-success'>";
-   echo "<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>";
-    echo "<strong>";
-    echo "Bienvenido  ";
-    echo "</strong>";
-    echo "En un momento será redireccionado";
-  echo "</div>";
-    header("Refresh: 2; URL=administrador.php");
-}
-else{
-    echo  "<div class='alert alert-danger'>";
-    echo "<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>";
-     echo "<strong>";
-     echo "Datos Incorrectos";
-     echo "</strong>";
-   echo "</div>";
-}
-}
-?>
+
+</div>
+
+</div>
 
 
 
-      <!-- Footer -->
-      <footer class="py-5 bg-dark">
+
+  <!-- Footer -->
+  <footer class="py-5 bg-dark">
       <div class="container">
         <p class="m-0 text-center text-white">Copyright &copy; Rythm 2018</p>
       </div>
@@ -143,6 +185,10 @@ else{
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 
+
+
+
+   
 </body>
 <?php
 mysqli_close($con);

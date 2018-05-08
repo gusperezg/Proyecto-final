@@ -69,14 +69,7 @@
                 }?>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="carrito.php">Carrito &nbsp; <?php
-                  if(isset($_SESSION['nombre'])){
-                  echo "<span class='badge badge-info'>" . $_SESSION['articulos']. "</span>";
-                  }
-                  else{
-                    echo "<span class='badge badge-info'>0</span>";
-                  }
-                  ?></a>
+              <a class="nav-link" href="carrito.php">Carrito </a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#">Contacto</a>
@@ -115,6 +108,7 @@
 
       <!-- Portfolio Item Heading -->
       <?php
+      error_reporting(0);
       $a=$_GET['a'];
       $result = mysqli_query($con,"SELECT a.imagen, ar.nombre artista, a.nombre album from album a, artista ar where a.idArtista=ar.idArtista and a.nombre='".$a."';");
  while($row = mysqli_fetch_array($result)) {

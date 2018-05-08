@@ -65,7 +65,7 @@
                 }?>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="carrito.php">Carrito 
+              <a class="nav-link" href="carrito.php">Carrito  
               </a>
              
             </li>
@@ -124,8 +124,8 @@
   <div class="col-lg-3">
 
     <div class="list-group">
-      <a href="administrador.php" class="list-group-item active">Agregar Album</a>
-      <a href="agregaCanciones.php" class="list-group-item">Agregar Canciones</a>
+      <a href="administrador.php" class="list-group-item">Agregar Album</a>
+      <a href="agregaCanciones.php" class="list-group-item active ">Agregar Canciones</a>
       <a href="eliminar.php" class="list-group-item">Eliminar</a>
       <a href="historial.php" class="list-group-item">Historial</a>
       <a href="editar.php" class="list-group-item">Editar</a>
@@ -133,33 +133,29 @@
     </div>
      <div class="col-lg-9">
          <div class="jumbotron">
-             <h2> Agregar un Nuevo Album </h2>
+             <h2> Agregar Canciones </h2>
              <br>
-             <form action="administrador.php" method="post">
+             <form action="agregaCanciones.php" method="post">
              <div class="form-group">
-                <label for="Email">Album:</label>
-                 <input type="text" class="form-control" id="album" placeholder="Ingrese Nombre del Album" name="album">
+                <label for="Album">Selecciona Album:</label><br>
+                
+                <SELECT name="album" class="form-control" height=100% width=50%>
+                <option>ALBUM</option>
+                <?php
+                 $result=mysqli_query($con,"SELECT nombre album, idAlbum id from album;");
+
+                 while($row = mysqli_fetch_array($result)) {
+                echo "<option value=" . $row['id'] . ">" . $row['album'] . "</option>";
+                 }
+                ?>
+                </select>
+                
                 </div>
-                <div class="form-group">
-                <label for="Email">Artista:</label>
-                 <input type="text" class="form-control" id="artista" placeholder="Ingrese Nombre del Artista" name="artista">
-                </div>
-                <div class="form-group">
-                <label for="Email">Descripción: </label>
-                 <input type="text" class="form-control" id="nombre" placeholder="Descripcion" name="descripcion">
-                </div>
-                <div class="form-group">
-                <label for="Email">Imagen: </label>
-                 <input type="file" class="form-control" id="archivo" name="archivo">
-                </div>
-                <div class="form-group">
-                <label for="Email">Precio: </label>
-                 <input type="number" class="form-control" id="precio" placeholder="Precio en Pesos" name="precio">
-                </div>
-                <div class="form-group">
-                <label for="Email">Cantidad: </label>
-                 <input type="number" class="form-control" id="cantidad" placeholder="Cantidad de Productos" name="cantidad">
-                </div>
+
+              
+                
+                
+
 
                 <br>
              <div class="boton">
@@ -168,55 +164,71 @@
             </div>
 </form>
 
+
 <?php
 error_reporting(0);
 $album=$_POST['album'];
-$artista=$_POST['artista'];
-$descripcion=$_POST['descripcion'];
-$imagen=$_POST['archivo'];
-$precio=$_POST['precio'];
-$cantidad=$_POST['cantidad'];
-$id="";
+$artista="";
+$cancion=$_POST['cancion'];
+$idar=$_GET['a'];
+$idal=$_GET['b'];
+                 
 
 
+                 $res=mysqli_query($con,"SELECT al.nombre nombre, imagen, a.nombre artista, a.idArtista id from album al, artista a where al.idArtista=a.idArtista and al.idAlbum='$album';");
 
-if($album!=null){
+                 while($row = mysqli_fetch_array($res)) {
 
-    $sql="INSERT INTO artista (nombre) values ('$artista')";
+                    $artista=$row['id'];
+                     echo "<h2>" . 'Album Seleccionado: ' . "</h2>";
+                     echo "<br>";
+                   echo "<table class='table table-striped'>";
+                    echo "<tr>";
+                    echo "<th>" . 'Nombre' . "</th><th>" . 'imagen' ."</th><th>" . 'Artista' ."</th>";
+                    echo "</tr>";
+                echo "<tr><td>" . $row['nombre'] . "</td>";
+                echo "<td><img src='" . $row['imagen'] . "' width='100px'></td>";
+                echo "<td>" . $row['artista'] ."</td></tr>";
+                echo "</table>";
+                
+                echo '<form action="agregaCanciones.php?a=' . $artista . '&b=' . $album . '"method="post">
+             <div class="form-group">
+                <label for="cancion">Nombre de la Cancion:</label><br>
+                <input type="text" class="form-control" placeholder="Cancion" name="cancion">
+                </div>
 
-    if (!mysqli_query($con,$sql)) {
-      die('Error: ' . mysqli_error($con));
-    }
+                <br>
+             <div class="boton">
+                 <button type="submit" class="btn btn-danger">Enviar</button>
+              <br><br>
+            </div>
+            </form>';
 
-   $result=mysqli_query($con,"SELECT idArtista id from artista where nombre='$artista'");
+          
+                
+           
+                 }
 
-   while($row = mysqli_fetch_array($result)) {
-    
-    $id=$row['id'];
-    
-   }
+                
+                 if($cancion!=null){
+                 $sql="INSERT into canciones (nombre, idArtista, idAlbum) values ('$cancion',$idar,$idal)";
 
-    $sql="INSERT INTO album (nombre, descripcion, imagen, precio, cantidad, idArtista) values ('$album', '$descripcion', '$imagen' ,'$precio', '$cantidad', '$id')";
+                 if (!mysqli_query($con,$sql)) {
+                    die('Error: ' . mysqli_error($con));
+                  }
+                  echo  "<div class='alert alert-success'>";
+                    echo "<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>";
+                    echo "<strong>";
+                    echo "Success!  ";
+                    echo "</strong>";
+                    echo "Se ingresaron los Datos.";
+                echo "</div>";
+                }
+       
 
-    if (!mysqli_query($con,$sql)) {
-      die('Error: ' . mysqli_error($con));
-    }
-    echo  "<div class='alert alert-success'>";
-   echo "<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>";
-    echo "<strong>";
-    echo "Success!  ";
-    echo "</strong>";
-    echo "Se ingresaron los Datos.";
-  echo "</div>";
-
-
-
-
-
-
-}
 
 ?>
+
 
 
 

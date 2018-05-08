@@ -64,15 +64,7 @@
                 }?>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="carrito.php">Carrito &nbsp; 
-                  <?php
-                  if(isset($_SESSION['nombre'])){
-                  echo "<span class='badge badge-info'>" . $_SESSION['articulo'] . "</span>";
-                  }
-                  else{
-                    echo "<span class='badge badge-info'>0</span>";
-                  }
-                  ?>
+              <a class="nav-link" href="carrito.php">Carrito 
                   </a>
             </li>
             <li class="nav-item">
@@ -177,6 +169,7 @@ if($correo!=null){
     echo "Bienvenido  ";
     echo "</strong>";
   echo "</div>";
+  header("Refresh: 2; URL=index.php");
         //inicia la sesion
         $_SESSION["id_usuario"] = $row['idUsuarios'];
         $_SESSION["nombre"] = $row['nombre'];
