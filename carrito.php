@@ -49,7 +49,7 @@
                 if(isset($_SESSION['nombre'])){
             echo "<li class='nav-item'>";
             echo "<a class='nav-link' >";
-            echo "Bienvenido " . $_SESSION['nombre'];
+            echo "Bienvenid@ " . $_SESSION['nombre'];
             echo "</a>";
             echo "</li>";
                 }
@@ -66,7 +66,7 @@
               <a class="nav-link active" href="carrito.php">Carrito </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Contacto</a>
+            <a class="nav-link" href="contacto.php">Contacto</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="redirecciona.php">Administrador</a>
@@ -80,7 +80,7 @@
     <style>
 .parallax { 
     /* The image used */
-    background-image: url("charli_xc.jpg");
+    background-image: url("imagenes/charli_xc.jpg");
 
     /* Set a specific height */
     height: 400px; 
@@ -138,12 +138,39 @@ if(isset($_SESSION['nombre'])){ //checa si hay una sesion iniciada
     
 
     if($a!=null){ // Ingresar al carrito cuando se agrega algo 
+
+      $sql = "SELECT cantidad from album  WHERE idAlbum=$a";
+      $resultado=mysqli_query($con,$sql);
+      while($row = mysqli_fetch_array($resultado)) {
+      if($row['cantidad']<=0){
+        echo "<br>";
+        echo  "<div class='alert alert-danger'>";
+       echo "<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>";
+        echo "<strong>";
+        echo "Ya no tenemos ese Producto en Existencia";
+        echo "</strong>";
+      echo "</div>";
+      echo "<br>";
+      echo '<div class="alert alert-dark" role="alert">
+      Pero Tenemos Otros Productos! Checalos ahora!
+      </div>';
+      echo "<br>";
+      echo "<div class='boton'>";
+      echo "<a href='index.php'>";
+      echo "<button type='button' class='btn btn-success'>Regresar</button>";
+      echo "</a>";
+      echo "</div>";
+      echo "<br>";
+      }
+    
+
+      else{
      $sql="INSERT INTO carrito (idAlbum, idUsuario, cantidad) VALUES ($a, $id, 1);";
     if (!mysqli_query($con,$sql)) {
         die('Error: ' . mysqli_error($con));
       }
     
-    
+      header("Location: carrito.php");
       $result = mysqli_query($con,"SELECT imagen, a.nombre album, ar.nombre artista, precio, ca.cantidad, a.idAlbum id from album a, artista ar, carrito ca where a.idAlbum=ca.idAlbum and a.idArtista=ar.idArtista and idUsuario=$id;");
       $contador=1;
       echo "<br>";
@@ -156,7 +183,7 @@ if(isset($_SESSION['nombre'])){ //checa si hay una sesion iniciada
   while($row = mysqli_fetch_array($result)) {
     echo "<form action='carrito.php?id=" . $row['id'] . "' method='post'>";
       echo "<tr>";
-      echo "<td><img src='" . $row['imagen'] . "' width='100px'></td>";
+      echo "<td><img src='imagenes/" . $row['imagen'] . "' width='100px'></td>";
       echo "<td>" . $contador++ . "</td>";
       echo "<td>" . $row['artista'] . "</td>";
       echo "<th> " . $row['album'] . "</th>";
@@ -168,7 +195,6 @@ if(isset($_SESSION['nombre'])){ //checa si hay una sesion iniciada
       echo "</form>";
 
       $total+=($row['cantidad'] * $row['precio']);
-     
   }
   
   echo "<tr><td></td><td></td><td></td><td></td><td>TOTAL</td><td> $" . $total . " MX</td>";
@@ -183,14 +209,17 @@ if(isset($_SESSION['nombre'])){ //checa si hay una sesion iniciada
     
 
   echo "<br>";
-}
 
+  
+}
+    }
+  }
 //Entra al carrito sin agregar productos a este
 
 else{
 
-    $result = mysqli_query($con,"SELECT imagen, a.nombre album, ar.nombre artista, precio, ca.cantidad, a.idAlbum id from album a, artista ar, carrito ca where a.idAlbum=ca.idAlbum and a.idArtista=ar.idArtista and idUsuario=$id;");
-      $contador=1;
+    $result = mysqli_query($con,"SELECT imagen, a.nombre album, ar.nombre artista, precio, ca.cantidad, a.idAlbum id from album a, artista ar, carrito ca where a.idAlbum=ca.idAlbum and a.idArtista=ar.idArtista and idUsuario=$id;");  
+    $contador=1;
       echo "<br>";
       echo "<div class='contenedor'>";
       echo "<p>" . '*Para Eliminar Poner la Cantidad en CERO' . "</p>";
@@ -198,12 +227,12 @@ else{
     echo "<table class='table table-striped table-hover'>";
     echo "<tr><th>Imagen</th><th>Articulo</th><th>Artista</th><th>Album</th><th>Cantidad</th><th>Precio</th><th>Actualizar</th></tr>";
   
-    $total="";
+    $total="0";
 
   while($row = mysqli_fetch_array($result)) {
     echo "<form action='carrito.php?id=" . $row['id'] . "' method='post'>";
       echo "<tr>";
-      echo "<td><img src='" . $row['imagen'] . "' width='100px'></td>";
+      echo "<td><img src='imagenes/" . $row['imagen'] . "' width='100px'></td>";
       echo "<td>" . $contador++ . "</td>";
       echo "<td>" . $row['artista'] . "</td>";
       echo "<td>" . $row['album'] . "</td>";
@@ -274,6 +303,7 @@ $usuario=$_SESSION["id_usuario"];
    if (!mysqli_query($con,$sql)) {
      die('Error: ' . mysqli_error($con));
     }
+    header("Location: carrito.php");
   }
     
 ?>

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html lang="es">
-  <?php
+<html>
+
+<?php
   // Crear una conexión
   $con = mysqli_connect("localhost","root","","rythm");
 
@@ -10,9 +11,8 @@
   }
 
   session_start();
-
 ?>
-   
+
   <head>
 
     <meta charset="utf-8">
@@ -20,21 +20,19 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" type="image/png" href="music.png" />
-
-    <title>Administrador</title>
+    <title>Contacto</title>
 
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="css/shop-homepage.css" rel="stylesheet">
+    <link href="css/heroic-features.css" rel="stylesheet">
 
   </head>
 
   <body>
-
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+      <!-- Barra de Arriba -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
       <div class="container">
         <a class="navbar-brand" href="#">Rythm</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -44,9 +42,10 @@
           <ul class="navbar-nav ml-auto">
             <li class="nav-item">
               <a class="nav-link" href="index.php">Inicio
-                <span class="sr-only">(current)</span>
+                
               </a>
-            </li><?php
+            </li>
+            <?php
                 if(isset($_SESSION['nombre'])){
             echo "<li class='nav-item'>";
             echo "<a class='nav-link' >";
@@ -56,7 +55,7 @@
                 }
             ?>
             <li class="nav-item">
-                <?php
+            <?php
                 if(!isset($_SESSION['nombre'])){
               echo "<a class='nav-link' href='sesion.php'>" . "Iniciar Sesión" . "</a>";
                 }
@@ -65,24 +64,27 @@
                 }?>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="carrito.php">Carrito
-              </a>
-             
-            </li>
-            <li class="nav-item">
-            <a class="nav-link" href="contacto.php">Contacto</a>
+              <a class="nav-link" href="carrito.php">Carrito 
+                  </a>
             </li>
             <li class="nav-item active">
-              <a class="nav-link" href="#">Administrador</a>
+              <a class="nav-link" href="contacto.php">Contacto</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="redirecciona.php">Administrador</a>
             </li>
           </ul>
         </div>
       </div>
     </nav>
+    <br><br>
+
+
+    <!--Parallax Effect -->
 <style>
 .parallax { 
     /* The image used */
-    background-image: url("imagenes/lo.jpg");
+    background-image: url("imagenes/luis.jpg");
 
     /* Set a specific height */
     height: 400px; 
@@ -104,80 +106,75 @@
   label{
     font-weight: bold;
   }
+.boton{
+    padding-left:32%;
+}
+
+.btn-success{
+    padding-left:50%;
+    padding-right:45%;
+}
+
 </style>
-
-
 
 <div class="parallax">
 <div class="text-center">
     <h1>
-    Administrador
+    Contacto
     </h1>
 </div>
 
     </div>
-    <br>
 
- <div class="container">
+<br><br>
+<div class="container">
 <div class="row">
 
-  <div class="col-lg-3">
+<div class="col-lg-3">
+<div class="jumbotron">
+  <h2>Contactanos</h2><br>
+  <form action="#" method="post">
 
-    <div class="list-group">
-      <a href="administrador.php" class="list-group-item">Agregar Album</a>
-      <a href="agregaCanciones.php" class="list-group-item">Agregar Canciones</a>
-      <a href="eliminar.php" class="list-group-item">Eliminar</a>
-      <a href="historial.php" class="list-group-item active">Historial</a>
-      <a href="editar.php" class="list-group-item">Editar</a>
+    <div class="form-group">
+      <label for="Email">Email:</label>
+      <input type="email" class="form-control" id="email" placeholder="Ingrese Correo" name="mail">
     </div>
+    <div class="form-group">
+      <label for="pwd">Comentario</label>
+      <textarea class="form-control" id="comentario" name="comentario">
+      Comentarios </textarea>
     </div>
-     <div class="col-lg-9">
-         <div class="jumbotron">
-             <h2> H I S T O R I A L </h2>
-             <br>
-        <table class="table table-striped table-hover">
-        <tr><th>Nombre</th><th>Imagen</th><th>Artista</th><th>Cantidad Comprada</th><th>Usuario</th></tr>
-    <?php
+    <br>
+    <div class="boton">
+    <button type="submit" class="btn btn-default">Enviar</button>
+    <br><br>
+</div>
+</div>
+  </form>
 
-        $res=mysqli_query($con,"SELECT a.nombre nombre, a.imagen imagen, ar.nombre artista, h.cantidad, h.idUsuario usuario from album a, historial h, artista ar where a.idAlbum=h.idAlbum and a.idArtista=ar.idArtista");
-        while($row = mysqli_fetch_array($res)) {
-            echo "<tr>";
-            echo "<td>" . $row['nombre'] . "</td>"; 
-            echo "<td><img src='imagenes/" . $row['imagen'] . "' width='100px'></td>"; 
-            echo "<td>" . $row['artista'] . "</td>"; 
-            echo "<td><center>" . $row['cantidad'] . "</center></td>";
-            echo "<td><center>" . $row['usuario'] . "</center></td>"; 
-            echo "</tr>";
-
-        }
-
-
-?>
-
-        </table>
+</div>
 
 
 
+<div class="col-lg-9">
+
+  <h2>Ubicación</h2><br>
+  
+  <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d3763.2543709138317!2d-99.2659243855262!3d19.401412386902056!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1ses-419!2smx!4v1525751834979" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
 
 
-        </div>
     </div>
 
-  </div>
+</div>
+</div>
+<br><br>
 
-  <br><br>
+    <!-- Footer -->
 
-
-
-
-
-      <!-- Footer -->
-      <div class="container">
-      <footer class="py-5 bg-dark">
+    <footer class="py-5 bg-dark">
       <div class="container">
         <p class="m-0 text-center text-white">Copyright &copy; Rythm 2018</p>
-</div>
-</div>
+      </div>
       <!-- /.container -->
     </footer>
 
@@ -186,8 +183,10 @@
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 
+
 </body>
 <?php
 mysqli_close($con);
 ?>
+
 </html>

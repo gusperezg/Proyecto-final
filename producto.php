@@ -54,7 +54,7 @@
                 if(isset($_SESSION['nombre'])){
             echo "<li class='nav-item'>";
             echo "<a class='nav-link' >";
-            echo "Bienvenido " . $_SESSION['nombre'];
+            echo "Bienvenid@ " . $_SESSION['nombre'];
             echo "</a>";
             echo "</li>";
                 }
@@ -72,7 +72,7 @@
               <a class="nav-link" href="carrito.php">Carrito </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Contacto</a>
+            <a class="nav-link" href="contacto.php">Contacto</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="redirecciona.php">Administrador</a>
@@ -128,7 +128,7 @@
       echo "<div class='row'>";
 
        echo  "<div class='col-md-8'>";
-        echo "<img class='img-fluid' src='" . $row['imagen'] . "' alt=''>";
+        echo "<img class='img-fluid' src='imagenes/" . $row['imagen'] . "' alt=''>";
         echo "</div>";
  }
         $contador=1;

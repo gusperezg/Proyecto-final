@@ -52,7 +52,7 @@
                 if(isset($_SESSION['nombre'])){
             echo "<li class='nav-item'>";
             echo "<a class='nav-link' >";
-            echo "Bienvenido " . $_SESSION['nombre'];
+            echo "Bienvenid@ " . $_SESSION['nombre'];
             echo "</a>";
             echo "</li>";
                 }
@@ -70,7 +70,7 @@
               <a class="nav-link" href="carrito.php">Carrito </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Contacto</a>
+            <a class="nav-link" href="contacto.php">Contacto</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="redirecciona.php">Administrador</a>
@@ -100,7 +100,7 @@
 <style>
 .parallax { 
     /* The image used */
-    background-image: url("bebe.jpg");
+    background-image: url("imagenes/bebe.jpg");
 
     /* Set a specific height */
     width: 840px;
@@ -125,19 +125,12 @@
 .naranja{
     color:orange;
 }
+
 .card-body{
     height:200px;
 }
 </style>
-
-<script>
-function mFunction() {
-    <?php
-    $_SESSION['articulos'] = ((int) $_SESSION['articulos'] + 1);
-    ?>
-}
-
- </script>   
+  
         <div class="col-lg-9">
 
 
@@ -155,7 +148,7 @@ function mFunction() {
           <!-- Ariana Grande -->
         
           <?php
-              $result = mysqli_query($con,"SELECT imagen, a.nombre album, ar.nombre artista, precio, descripcion, a.idAlbum id FROM album a, artista ar where a.idArtista=ar.idArtista;");
+              $result = mysqli_query($con,"SELECT imagen, a.nombre album, ar.nombre artista, precio, descripcion, a.idAlbum id, cantidad FROM album a, artista ar where a.idArtista=ar.idArtista;");
               while($row = mysqli_fetch_array($result)) {
 
                 $id=$row['album'];
@@ -163,7 +156,7 @@ function mFunction() {
         echo "<div class='col-lg-3 col-md-6 mb-4'>";
         echo "<div class='card'>"; 
         echo "<a href='producto.php?a=$id'>";
-        echo "<img class='card-img-top' src='" . $row['imagen'] . "'>";
+        echo "<img class='card-img-top' src='imagenes/" . $row['imagen'] . "'>";
         echo "<div class='card-body'>";
         echo "<h4 class='card-title'>";
         
@@ -183,7 +176,12 @@ function mFunction() {
         echo " <p class='card-text'>";
         echo $row['descripcion'];
         echo "</p>";
+        echo " <p class='card-text color' >";
+        echo 'Cantidad Existente: ' . $row['cantidad'];
+        
+        echo "</p>";
         echo "</div>";
+        echo "<br><br>";
         echo " <div class='card-footer'>";
 
        echo "<small class='text-muted'>&#9733; &#9733; &#9733; &#9733; &#973".rand(3, 4)."</small>&nbsp; &nbsp;";
@@ -208,7 +206,7 @@ function mFunction() {
     <div class="container">
     <footer class="py-5 bg-dark">
       <div class="container">
-        <p class="m-0 text-center text-white">Copyright &copy; Your Website 2018</p>
+        <p class="m-0 text-center text-white">Copyright &copy; Rythm 2018</p>
       </div>
       <!-- /.container -->
     </footer>

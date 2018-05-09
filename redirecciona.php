@@ -50,7 +50,7 @@
                 if(isset($_SESSION['nombre'])){
             echo "<li class='nav-item'>";
             echo "<a class='nav-link' >";
-            echo "Bienvenido " . $_SESSION['nombre'];
+            echo "Bienvenid@ " . $_SESSION['nombre'];
             echo "</a>";
             echo "</li>";
                 }
@@ -70,7 +70,7 @@
              
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Contacto</a>
+            <a class="nav-link" href="contacto.php">Contacto</a>
             </li>
             <li class="nav-item active">
               <a class="nav-link" href="#">Administrador</a>
@@ -96,7 +96,7 @@
     </div>
     <br>
     <div class="boton">
-    <button type="submit" class="btn btn-default">Enviar</button>
+    <button type="submit" class="btn btn-primary">Enviar</button>
     <br><br>
     </div>
 </div>

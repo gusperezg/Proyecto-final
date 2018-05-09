@@ -50,7 +50,7 @@
                 if(isset($_SESSION['nombre'])){
             echo "<li class='nav-item'>";
             echo "<a class='nav-link' >";
-            echo "Bienvenido " . $_SESSION['nombre'];
+            echo "Bienvenid@ " . $_SESSION['nombre'];
             echo "</a>";
             echo "</li>";
                 }
@@ -70,7 +70,7 @@
              
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Contacto</a>
+            <a class="nav-link" href="contacto.php">Contacto</a>
             </li>
             <li class="nav-item active">
               <a class="nav-link" href="#">Administrador</a>
@@ -82,7 +82,7 @@
 <style>
 .parallax { 
     /* The image used */
-    background-image: url("lo.jpg");
+    background-image: url("imagenes/lo.jpg");
 
     /* Set a specific height */
     height: 400px; 
@@ -133,7 +133,7 @@
     </div>
      <div class="col-lg-9">
          <div class="jumbotron">
-             <h2> Eliminar Canciones </h2>
+             <h2> Eliminar Album </h2>
              <p>Al seleccionar un album se eliminará automaticamente</p>
              <br>
              <form action="eliminar.php" method="post">
@@ -158,7 +158,7 @@
 
                 <br>
              <div class="boton">
-                 <button type="submit" class="btn btn-success">Enviar</button>
+                 <button type="submit" class="btn btn-success">Eliminar</button>
               <br><br>
             </div>
 </form>
@@ -185,7 +185,7 @@ $artista="";
                     echo "<th>" . 'Nombre' . "</th><th>" . 'imagen' ."</th><th>" . 'Artista' ."</th>";
                     echo "</tr>";
                 echo "<tr><td>" . $row['nombre'] . "</td>";
-                echo "<td><img src='" . $row['imagen'] . "' width='100px'></td>";
+                echo "<td><img src='imagenes/" . $row['imagen'] . "' width='100px'></td>";
                 echo "<td>" . $row['artista'] ."</td></tr>";
                 echo "</table>";
 
@@ -211,13 +211,14 @@ $artista="";
                     die('Error: ' . mysqli_error($con));
                  }
 
+                 $sql="DELETE from artista where nombre='$artista'";
+                   if (!mysqli_query($con,$sql)) {
+                      die('Error: ' . mysqli_error($con));
+                    }
+
                  
 
-                 $sql="DELETE from artista where nombre='$artista'";
-                 if (!mysqli_query($con,$sql)) {
-                    die('Error: ' . mysqli_error($con));
-                  }
-
+                 
                   
 ?>
 

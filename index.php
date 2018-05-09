@@ -50,7 +50,7 @@
                 if(isset($_SESSION['nombre'])){
             echo "<li class='nav-item'>";
             echo "<a class='nav-link' >";
-            echo "Bienvenido " . $_SESSION['nombre'];
+            echo "Bienvenid@ " . $_SESSION['nombre'];
             echo "</a>";
             echo "</li>";
                 }
@@ -71,7 +71,7 @@
              
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Contacto</a>
+            <a class="nav-link" href="contacto.php">Contacto</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="redirecciona.php">Administrador</a>
@@ -109,7 +109,7 @@
             </ol>
             <div class="carousel-inner" role="listbox">
               <div class="carousel-item active">
-                <img class="d-block img-fluid" src="lorde.jpg" alt="First slide">
+                <img class="d-block img-fluid" src="imagenes/lorde.jpg" alt="First slide">
                 <div class="carousel-caption d-none d-md-block">
                 <h3>Lorde</h3>
 
@@ -117,7 +117,7 @@
                     </div>
               </div>
               <div class="carousel-item">
-                <img class="d-block img-fluid" src="lana.jpg" alt="Second slide">
+                <img class="d-block img-fluid" src="imagenes/lana.jpg" alt="Second slide">
                 <div class="carousel-caption d-none d-md-block">
                 <h3>Lana del Rey</h3>
 
@@ -125,7 +125,7 @@
                     </div>
               </div>
               <div class="carousel-item">
-                <img class="d-block img-fluid" src="dua.png" alt="Third slide">
+                <img class="d-block img-fluid" src="imagenes/dua.png" alt="Third slide">
                 <div class="carousel-caption d-none d-md-block">
                 <h3>DUA LIPA</h3>
 
@@ -154,7 +154,7 @@
                          
                 echo "<a href='producto.php?a=No tears left to cry'>";
                 ?>
-                    <img class="card-img-top" src="<?php
+                    <img class="card-img-top" src="imagenes/<?php
                 while($row = mysqli_fetch_array($result)) {
                     echo $row['imagen'];
                   }
@@ -210,7 +210,7 @@
                          
                          echo "<a href='producto.php?a=Melodrama'>";
                          ?>
-                         <img class="card-img-top" src="<?php
+                         <img class="card-img-top" src="imagenes/<?php
                 while($row = mysqli_fetch_array($result)) {
                     echo $row['imagen'];
                   }
@@ -265,7 +265,7 @@
                          
                          echo "<a href='producto.php?a=Dont Kill My Vibe EP'>";
                 ?>
-                <img class="card-img-top" src="<?php
+                <img class="card-img-top" src="imagenes/<?php
                 while($row = mysqli_fetch_array($result)) {
                     echo $row['imagen'];
                   }
@@ -334,7 +334,7 @@
 <style>
 .parallax { 
     /* The image used */
-    background-image: url("halsey.jpg");
+    background-image: url("imagenes/halsey.jpg");
 
     /* Set a specific height */
     height: 500px; 

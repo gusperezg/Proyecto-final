@@ -49,7 +49,7 @@
                 if(isset($_SESSION['nombre'])){
             echo "<li class='nav-item'>";
             echo "<a class='nav-link' >";
-            echo "Bienvenido " . $_SESSION['nombre'];
+            echo "Bienvenid@ " . $_SESSION['nombre'];
             echo "</a>";
             echo "</li>";
                 }
@@ -68,7 +68,7 @@
                   </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Contacto</a>
+            <a class="nav-link" href="contacto.php">Contacto</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="redirecciona.php">Administrador</a>
@@ -84,7 +84,7 @@
 <style>
 .parallax { 
     /* The image used */
-    background-image: url("sig.jpg");
+    background-image: url("imagenes/sig.jpg");
 
     /* Set a specific height */
     height: 400px; 
@@ -113,6 +113,13 @@
 .btn-success{
     padding-left:50%;
     padding-right:45%;
+}
+.botoncito:hover{
+  background-color:#1550A7;
+}
+.botoncito{
+  background-color:#1A4687;
+  color:white;
 }
 
 </style>
@@ -145,7 +152,7 @@
     </div>
     <br>
     <div class="boton">
-    <button type="submit" class="btn btn-default">Enviar</button>
+    <button type="submit" class="btn botoncito">Enviar</button>
     <br><br>
 </div>
 </div>
@@ -173,7 +180,6 @@ if($correo!=null){
         //inicia la sesion
         $_SESSION["id_usuario"] = $row['idUsuarios'];
         $_SESSION["nombre"] = $row['nombre'];
-        $_SESSION["articulos"] = 0;
     }
     else{
         //alerta de Datos Incorrectos
@@ -241,7 +247,21 @@ $fecha=$_POST['date'];
 $tarjeta=$_POST['tarjeta'];
 $direccion=$_POST['direccion'];
 if($nombre!=null){
-  
+
+  $sql = "SELECT nombre FROM usuarios WHERE correo = '$mail'";
+	$resultado=mysqli_query($con,$sql); 
+    $numregistros=mysqli_num_rows($resultado); 
+    $row = mysqli_fetch_array($resultado);
+    if($numregistros>0){
+      echo  "<div class='alert alert-danger'>";
+      echo "<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>";
+       echo "<strong>";
+       echo "Usuario ya existente";
+       echo "</strong>";
+     echo "</div>";
+    }
+  else{
+
 
   $sql="INSERT INTO usuarios (nombre, correo, contra, nacimiento, tarjeta, direccion)
       VALUES ('$nombre', '$mail', '$contras', '$fecha', $tarjeta, '$direccion');";
@@ -258,12 +278,13 @@ if($nombre!=null){
   echo "</div>";
 
 }
+}
 ?>
     <!-- Footer -->
 
     <footer class="py-5 bg-dark">
       <div class="container">
-        <p class="m-0 text-center text-white">Copyright &copy; Your Website 2018</p>
+        <p class="m-0 text-center text-white">Copyright &copy; Rythm 2018</p>
       </div>
       <!-- /.container -->
     </footer>

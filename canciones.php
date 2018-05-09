@@ -49,7 +49,7 @@
                 if(isset($_SESSION['nombre'])){
             echo "<li class='nav-item'>";
             echo "<a class='nav-link' >";
-            echo "Bienvenido " . $_SESSION['nombre'];
+            echo "Bienvenid@ " . $_SESSION['nombre'];
             echo "</a>";
             echo "</li>";
                 }
@@ -66,7 +66,7 @@
               <a class="nav-link" href="carrito.php">Carrito </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Contacto</a>
+            <a class="nav-link" href="contacto.php">Contacto</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="redirecciona.php">Administrador</a>
@@ -96,7 +96,7 @@
 <style>
 .parallax { 
     /* The image used */
-    background-image: url("halsey.jpg");
+    background-image: url("imagenes/halsey.jpg");
 
     /* Set a specific height */
     width: 840px;
@@ -141,7 +141,7 @@
     $contador=1;
     while($row = mysqli_fetch_array($result)) {
         echo "<tr>";
-        echo "<td><img src='" . $row['imagen'] . "' width='100px'></td>";
+        echo "<td><img src='imagenes/" . $row['imagen'] . "' width='100px'></td>";
         echo "<td>" . $contador++ . "</td>";
         echo "<th>" . $row['cancion'] . "</th>";
         echo "<td>" . $row['artista'] . "</td>";
@@ -170,7 +170,7 @@
     <div class="container">
     <footer class="py-5 bg-dark">
       <div class="container">
-        <p class="m-0 text-center text-white">Copyright &copy; Your Website 2018</p>
+        <p class="m-0 text-center text-white">Copyright &copy; Rythm 2018</p>
       </div>
       <!-- /.container -->
     </footer>

@@ -51,7 +51,7 @@
                 if(isset($_SESSION['nombre'])){
             echo "<li class='nav-item'>";
             echo "<a class='nav-link' >";
-            echo "Bienvenido " . $_SESSION['nombre'];
+            echo "Bienvenid@ " . $_SESSION['nombre'];
             echo "</a>";
             echo "</li>";
                 }
@@ -65,15 +65,15 @@
                     echo "<a class='nav-link' href='cerrar.php'>" . "Cerrar Sesión" . "</a>";
                 }?>
             </li>
-            <li class="nav-item">
+            <li class="nav-item active">
               <a class="nav-link" href="carrito.php">Carrito 
               </a>
              
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Contacto</a>
+            <a class="nav-link" href="contacto.php">Contacto</a>
             </li>
-            <li class="nav-item active">
+            <li class="nav-item">
               <a class="nav-link" href="#">Administrador</a>
             </li>
           </ul>
@@ -100,7 +100,7 @@ h3{
 <center>
   <div class="col-lg-9">
     <h1>Se realizó la compra Correctamente</h1>
-    <img src="palomita.png" width=130px>
+    <img src="imagenes/palomita.png" width=130px>
     <br><br>
     <h3>Articulos Comprados</h3>
     <br>
@@ -120,7 +120,7 @@ h3{
 
  while($row = mysqli_fetch_array($result)) {
      echo "<tr>";
-     echo "<td><img src='" . $row['imagen'] . "' width='100px'></td>";
+     echo "<td><img src='imagenes/" . $row['imagen'] . "' width='100px'></td>";
      echo "<td>" . $contador++ . "</td>";
      echo "<td>" . $row['artista'] . "</td>";
      echo "<td>" . $row['album'] . "</td>";

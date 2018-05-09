@@ -50,7 +50,7 @@
                 if(isset($_SESSION['nombre'])){
             echo "<li class='nav-item'>";
             echo "<a class='nav-link' >";
-            echo "Bienvenido " . $_SESSION['nombre'];
+            echo "Bienvenid@ " . $_SESSION['nombre'];
             echo "</a>";
             echo "</li>";
                 }
@@ -70,7 +70,7 @@
              
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Contacto</a>
+            <a class="nav-link" href="contacto.php">Contacto</a>
             </li>
             <li class="nav-item active">
               <a class="nav-link" href="#">Administrador</a>
@@ -82,7 +82,7 @@
 <style>
 .parallax { 
     /* The image used */
-    background-image: url("lo.jpg");
+    background-image: url("imagenes/lo.jpg");
 
     /* Set a specific height */
     height: 400px; 
@@ -178,9 +178,24 @@ $precio=$_POST['precio'];
 $cantidad=$_POST['cantidad'];
 $id="";
 
+$sql = "SELECT nombre FROM album WHERE nombre = '$album'";
+	$resultado=mysqli_query($con,$sql); 
+    $numregistros=mysqli_num_rows($resultado); 
+    $row = mysqli_fetch_array($resultado);
+    if($numregistros>0){
+      echo  "<div class='alert alert-danger'>";
+      echo "<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>";
+      echo "<strong>";
+      echo "Error:  ";
+      echo "</strong>";
+      echo "Ya se ingresó ese Album";
+      echo "</div>";
+
+    }
+else{
 
 
-if($album!=null){
+if($album!=null && $artista!=null && $descripcion!=null && $imagen!=null && $precio!=null && $cantidad!=null){
 
     $sql="INSERT INTO artista (nombre) values ('$artista')";
 
@@ -210,12 +225,19 @@ if($album!=null){
   echo "</div>";
 
 
-
-
-
-
 }
-
+else{
+  if($album!=null){
+  echo  "<div class='alert alert-danger'>";
+   echo "<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>";
+    echo "<strong>";
+    echo "Error:  ";
+    echo "</strong>";
+    echo "Debes de llenar todos los campos.";
+  echo "</div>";
+  }
+}
+}
 ?>
 
 

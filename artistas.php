@@ -48,7 +48,7 @@
                 if(isset($_SESSION['nombre'])){
             echo "<li class='nav-item'>";
             echo "<a class='nav-link' >";
-            echo "Bienvenido " . $_SESSION['nombre'];
+            echo "Bienvenid@ " . $_SESSION['nombre'];
             echo "</a>";
             echo "</li>";
                 }
@@ -66,7 +66,7 @@
               <a class="nav-link" href="carrito.php">Carrito</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Contacto</a>
+            <a class="nav-link" href="contacto.php">Contacto</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="redirecciona.php">Administrador</a>
@@ -96,7 +96,7 @@
 <style>
 .parallax { 
     /* The image used */
-    background-image: url("troyes.jpg");
+    background-image: url("imagenes/troyes.jpg");
 
     /* Set a specific height */
     width: 868px;
@@ -170,7 +170,7 @@
  while($row = mysqli_fetch_array($result)) {
         echo "<div class='col-md-3 col-sm-6 mb-4'>";
             echo "<div class='contenedor'>";
-        echo "<img class='imagen' src='"  . $row['imagen'] ."'>";
+        echo "<img class='imagen' src='imagenes/"  . $row['imagen'] ."'>";
   echo "<div class='centrado'>" . $row['nombre'] . "</div>";
     echo "</div>";
 
@@ -191,7 +191,7 @@ echo "</div>";
     <div class="contenedor">
     <footer class="py-5 bg-dark">
 
-        <p class="m-0 text-center text-white">Copyright &copy; Your Website 2018</p>
+        <p class="m-0 text-center text-white">Copyright &copy; Rythm 2018</p>
       </div>
 
       <!-- /.container -->
