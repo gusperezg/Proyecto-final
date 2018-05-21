@@ -10,6 +10,13 @@
     echo "Failed to connect to MySQL: " . mysqli_connect_error();
   }
   session_start();
+  error_reporting(0);
+  $id=$_SESSION["id_usuario"];
+        $result = mysqli_query($con,"SELECT COUNT(*) hola FROM carrito where idUsuario=$id;");
+    while($row = mysqli_fetch_array($result)) {
+     $art=$row['hola'];
+    } 
+    $_SESSION["articulos"] = $art;
 ?>
 
   <head>
@@ -57,6 +64,11 @@
             echo "Bienvenid@ " . $_SESSION['nombre'];
             echo "</a>";
             echo "</li>";
+            echo "<li class='nav-item '>";
+            echo "<a class='nav-link'  href='usuario.php' >";
+            echo "Perfil";
+            echo "</a>";
+            echo "</li>";
                 }
             ?>
             <li class="nav-item">
@@ -68,9 +80,24 @@
                     echo "<a class='nav-link' href='cerrar.php'>" . "Cerrar Sesión" . "</a>";
                 }?>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="carrito.php">Carrito </a>
-            </li>
+            <?php
+           if(isset($_SESSION['nombre'])){
+            echo '<li class="nav-item">
+              <a class="nav-link" href="carrito.php">Carrito  <span class="badge badge-primary">'  . $_SESSION["articulos"] .    '</span>
+            
+              </a>
+             
+            </li>';
+            }
+            else{
+              echo '<li class="nav-item">
+              <a class="nav-link" href="carrito.php">Carrito  <span class="badge badge-primary">  0     </span>
+            
+              </a>
+             
+            </li>';
+            }
+            ?>
             <li class="nav-item">
             <a class="nav-link" href="contacto.php">Contacto</a>
             </li>
@@ -115,7 +142,7 @@
      echo "<br>";
     echo "<div class='contenedor'>";
     echo "<a href='albumes.php'>";
-    echo "<button type='button' class='btn btn-success'>" . 'Regresar' . "</button>";
+    echo "<button type='button' class='btn btn-success'>" . 'Regresar a albumes' . "</button>";
     echo "</a>";
     echo "</div>";
      echo "<h1 class='my-4'>" . $row['album'];
@@ -168,15 +195,14 @@
 
 
 
-
-    <!-- Footer -->
-    <div class="container">
-    <br>
+</div>
+</div>
 <br>
+<br>
+    <!-- Footer -->
+  
     <footer class="py-5 bg-dark">
-      <div class="container">
-        <p class="m-0 text-center text-white">Copyright &copy; Your Website 2018</p>
-      </div>
+        <p class="m-0 text-center text-white">Copyright &copy; Rythm 2018</p>
       <!-- /.container -->
     </footer>
 

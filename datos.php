@@ -28,7 +28,10 @@ $direccion=$_POST['direccion'];
 */
 //echo "nombre " . $nombre . "email " . $mail . "Contraseña " . $contraseña . "Fecha " . $fecha . "tarjeta " . $tarjeta . "Direccion " .$direccion;
 
-echo "nombre" . $nom . "contraseña" . $contra;
+$result = mysqli_query($con,"SELECT COUNT(*) hola FROM carrito where idUsuario=1;");
+while($row = mysqli_fetch_array($result)) {
+echo $row['hola'];
+}
 ?>
 </body>
 <?php

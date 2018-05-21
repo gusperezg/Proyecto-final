@@ -11,6 +11,14 @@
   }
 
   session_start();
+  error_reporting(0);
+  $id=$_SESSION["id_usuario"];
+        $result = mysqli_query($con,"SELECT COUNT(*) hola FROM carrito where idUsuario=$id;");
+    while($row = mysqli_fetch_array($result)) {
+     $art=$row['hola'];
+    } 
+    $_SESSION["articulos"] = $art;
+    
 ?>
 
   <head>
@@ -20,6 +28,8 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" type="image/png" href="music.png" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <title>Canciones</title>
 
     <!-- Bootstrap core CSS -->
@@ -52,6 +62,11 @@
             echo "Bienvenid@ " . $_SESSION['nombre'];
             echo "</a>";
             echo "</li>";
+            echo "<li class='nav-item '>";
+            echo "<a class='nav-link'  href='usuario.php' >";
+            echo "Perfil";
+            echo "</a>";
+            echo "</li>";
                 }
             ?>
             <li class="nav-item">
@@ -62,9 +77,24 @@
                 else{
                     echo "<a class='nav-link' href='cerrar.php'>" . "Cerrar Sesión" . "</a>";
                 }?>
-            <li class="nav-item">
-              <a class="nav-link" href="carrito.php">Carrito </a>
-            </li>
+            <?php
+           if(isset($_SESSION['nombre'])){
+            echo '<li class="nav-item">
+              <a class="nav-link" href="carrito.php">Carrito  <span class="badge badge-primary">'  . $_SESSION["articulos"] .    '</span>
+            
+              </a>
+             
+            </li>';
+            }
+            else{
+              echo '<li class="nav-item">
+              <a class="nav-link" href="carrito.php">Carrito  <span class="badge badge-primary">  0     </span>
+            
+              </a>
+             
+            </li>';
+            }
+            ?>
             <li class="nav-item">
             <a class="nav-link" href="contacto.php">Contacto</a>
             </li>
@@ -118,7 +148,9 @@
 .color{
     color:white;
 }
-
+.miclase{
+padding-left:20px;
+}
 </style>
         <div class="col-lg-9">
 <div class="parallax">
@@ -131,19 +163,24 @@
 </div>
 </div>
 <br><br>
-
-<div class="container">
+<div class="miclase">
+<h4>Buscar:</h4>
+<input class="form-control" id="myInput" type="text" placeholder="Busca una canción...">
+</div>
+<div class="container" id="myDIV">
 <br>
-<table class="table table-striped table-hover">
+<table class="table table-striped table-hover table-responsive">
     <tr><th>Imagen</th><th>Posición</th><th>Nombre</th><th>Artista</th><th>Album</th></tr>
     <?php
     $result = mysqli_query($con,"SELECT a.imagen, c.nombre cancion, ar.nombre artista, a.nombre album from canciones c, artista ar, album a where c.idArtista=ar.idArtista and c.idAlbum=a.idAlbum order by c.nombre;");
     $contador=1;
     while($row = mysqli_fetch_array($result)) {
+      $id=$row['album'];
         echo "<tr>";
         echo "<td><img src='imagenes/" . $row['imagen'] . "' width='100px'></td>";
         echo "<td>" . $contador++ . "</td>";
-        echo "<th>" . $row['cancion'] . "</th>";
+        
+        echo "<th><a href='producto.php?a=$id'>" . $row['cancion'] . "</a></th>";
         echo "<td>" . $row['artista'] . "</td>";
         echo "<td>" . $row['album'] . "</td>";
         echo "<tr>";
@@ -161,17 +198,24 @@
 
 
 
+</div>
+</div>
 
-
-
+<script>
+$(document).ready(function(){
+  $("#myInput").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#myDIV *").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});
+</script>
 
 
     <!-- Footer -->
-    <div class="container">
     <footer class="py-5 bg-dark">
-      <div class="container">
         <p class="m-0 text-center text-white">Copyright &copy; Rythm 2018</p>
-      </div>
       <!-- /.container -->
     </footer>
 

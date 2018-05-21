@@ -63,10 +63,24 @@
                     echo "<a class='nav-link' href='cerrar.php'>" . "Cerrar Sesión" . "</a>";
                 }?>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="carrito.php">Carrito 
-                  </a>
-            </li>
+           <?php
+           if(isset($_SESSION['nombre'])){
+            echo '<li class="nav-item">
+              <a class="nav-link" href="carrito.php">Carrito  <span class="badge badge-primary">'  . $_SESSION["articulos"] .    '</span>
+            
+              </a>
+             
+            </li>';
+            }
+            else{
+              echo '<li class="nav-item">
+              <a class="nav-link" href="carrito.php">Carrito  <span class="badge badge-primary">  0     </span>
+            
+              </a>
+             
+            </li>';
+            }
+            ?>
             <li class="nav-item">
             <a class="nav-link" href="contacto.php">Contacto</a>
             </li>
@@ -150,6 +164,9 @@
       <label for="pwd">Contraseña:</label>
       <input type="password" class="form-control" id="pwd" placeholder="Ingrese Contraseña" name="contrasena">
     </div>
+    <div class="form-group">
+     <input type="checkbox"  id="mostrar"  onchange="document.getElementById('pwd').type = this.checked ? 'text' : 'password'" name="check"> &nbsp; Mostrar Contraseña<br>
+  </div>
     <br>
     <div class="boton">
     <button type="submit" class="btn botoncito">Enviar</button>
@@ -180,6 +197,12 @@ if($correo!=null){
         //inicia la sesion
         $_SESSION["id_usuario"] = $row['idUsuarios'];
         $_SESSION["nombre"] = $row['nombre'];
+        $id=$_SESSION["id_usuario"];
+        $result = mysqli_query($con,"SELECT COUNT(*) hola FROM carrito where idUsuario=$id;");
+    while($row = mysqli_fetch_array($result)) {
+     $art=$row['hola'];
+    } 
+    $_SESSION["articulos"] = $art;
     }
     else{
         //alerta de Datos Incorrectos

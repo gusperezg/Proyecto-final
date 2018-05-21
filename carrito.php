@@ -11,6 +11,14 @@
   }
 
   session_start();
+
+  error_reporting(0);
+  $id=$_SESSION["id_usuario"];
+        $result = mysqli_query($con,"SELECT COUNT(*) hola FROM carrito where idUsuario=$id;");
+    while($row = mysqli_fetch_array($result)) {
+     $art=$row['hola'];
+    } 
+    $_SESSION["articulos"] = $art;
 ?>
 
   <head>
@@ -52,6 +60,11 @@
             echo "Bienvenid@ " . $_SESSION['nombre'];
             echo "</a>";
             echo "</li>";
+            echo "<li class='nav-item '>";
+            echo "<a class='nav-link'  href='usuario.php' >";
+            echo "Perfil";
+            echo "</a>";
+            echo "</li>";
                 }
             ?>
             <li class="nav-item">
@@ -62,9 +75,24 @@
                 else{
                     echo "<a class='nav-link' href='cerrar.php'>" . "Cerrar Sesión" . "</a>";
                 }?>
-            <li class="nav-item">
-              <a class="nav-link active" href="carrito.php">Carrito </a>
-            </li>
+            <?php
+           if(isset($_SESSION['nombre'])){
+            echo '<li class="nav-item">
+              <a class="nav-link" href="carrito.php">Carrito  <span class="badge badge-primary">'  . $_SESSION["articulos"] .    '</span>
+            
+              </a>
+             
+            </li>';
+            }
+            else{
+              echo '<li class="nav-item">
+              <a class="nav-link" href="carrito.php">Carrito  <span class="badge badge-primary">  0     </span>
+            
+              </a>
+             
+            </li>';
+            }
+            ?>
             <li class="nav-item">
             <a class="nav-link" href="contacto.php">Contacto</a>
             </li>
@@ -162,6 +190,7 @@ if(isset($_SESSION['nombre'])){ //checa si hay una sesion iniciada
       echo "</div>";
       echo "<br>";
       }
+      
     
 
       else{
@@ -176,7 +205,7 @@ if(isset($_SESSION['nombre'])){ //checa si hay una sesion iniciada
       echo "<br>";
       echo "<div class='contenedor'>";
 
-    echo "<table class='table table-striped table-hover'>";
+    echo "<table class='table table-striped table-hover table-responsive'>";
 
     echo "<tr><th>Imagen</th><th>Producto</th><th>Artista</th><th>Album</th><th>Cantidad</th><th>Precio</th><th>Precio</th></tr>";
   
@@ -224,7 +253,7 @@ else{
       echo "<div class='contenedor'>";
       echo "<p>" . '*Para Eliminar Poner la Cantidad en CERO' . "</p>";
       echo "<br>";
-    echo "<table class='table table-striped table-hover'>";
+    echo "<table class='table table-striped table-hover table-responsive'>";
     echo "<tr><th>Imagen</th><th>Articulo</th><th>Artista</th><th>Album</th><th>Cantidad</th><th>Precio</th><th>Actualizar</th></tr>";
   
     $total="0";
@@ -299,11 +328,30 @@ $usuario=$_SESSION["id_usuario"];
   }
   else{
 
-  $sql="UPDATE carrito SET cantidad='$cantidad' where idAlbum='$id' and idUsuario='$usuario';";
-   if (!mysqli_query($con,$sql)) {
-     die('Error: ' . mysqli_error($con));
-    }
-    header("Location: carrito.php");
+    $resultado = mysqli_query($con,"SELECT cantidad from album where idAlbum='$id';");
+    $row = mysqli_fetch_array($resultado);
+      $cant=$row['cantidad'];
+    
+    if($cant>=$cantidad){
+
+      $sql="UPDATE carrito SET cantidad='$cantidad' where idAlbum='$id' and idUsuario='$usuario';";
+       if (!mysqli_query($con,$sql)) {
+         die('Error: ' . mysqli_error($con));
+        }
+        header("Location: carrito.php");
+      }
+      else{
+        echo  "<div class='alert alert-danger'>";
+           echo "<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>";
+          echo "<strong>";
+          echo "No tenemos tantos productos disponibles";
+          echo "</strong>";
+          echo "</div>";
+        }
+    
+    
+    
+  
   }
     
 ?>

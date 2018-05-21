@@ -10,6 +10,14 @@
     echo "Failed to connect to MySQL: " . mysqli_connect_error();
   }
   session_start();
+  error_reporting(0);
+  $id=$_SESSION["id_usuario"];
+        $result = mysqli_query($con,"SELECT COUNT(*) hola FROM carrito where idUsuario=$id;");
+    while($row = mysqli_fetch_array($result)) {
+     $art=$row['hola'];
+    } 
+    $_SESSION["articulos"] = $art;
+    
 ?>
 
   <head>
@@ -51,6 +59,11 @@
             echo "Bienvenid@ " . $_SESSION['nombre'];
             echo "</a>";
             echo "</li>";
+            echo "<li class='nav-item '>";
+            echo "<a class='nav-link'  href='usuario.php' >";
+            echo "Perfil";
+            echo "</a>";
+            echo "</li>";
                 }
             ?>
             <li class="nav-item">
@@ -62,9 +75,24 @@
                     echo "<a class='nav-link' href='cerrar.php'>" . "Cerrar Sesión" . "</a>";
                 }?>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="carrito.php">Carrito</a>
-            </li>
+            <?php
+           if(isset($_SESSION['nombre'])){
+            echo '<li class="nav-item">
+              <a class="nav-link" href="carrito.php">Carrito  <span class="badge badge-primary">'  . $_SESSION["articulos"] .    '</span>
+            
+              </a>
+             
+            </li>';
+            }
+            else{
+              echo '<li class="nav-item">
+              <a class="nav-link" href="carrito.php">Carrito  <span class="badge badge-primary">  0     </span>
+            
+              </a>
+             
+            </li>';
+            }
+            ?>
             <li class="nav-item">
             <a class="nav-link" href="contacto.php">Contacto</a>
             </li>
@@ -106,8 +134,9 @@
     background-attachment: fixed;
     background-position: center;
     background-repeat: no-repeat;
-    background-size: cover;
+    background-size: 100% auto;
 }
+
 .texto{
     font-family: Arial, Helvetica, sans-serif;
     font-size: 80px;
@@ -145,7 +174,7 @@
 
 </style>
         <div class="col-lg-9">
-<div class="parallax">
+<div class="parallax background-size">
     <div class="text-center">
           
       <h1 class="texto">Artistas</h1>
@@ -166,12 +195,15 @@
  <div class="row">
      
      <?php
- $result = mysqli_query($con,"SELECT a.imagen, ar.nombre from album a, artista ar where a.idArtista=ar.idArtista;");
+ $result = mysqli_query($con,"SELECT a.imagen, ar.nombre, a.nombre album from album a, artista ar where a.idArtista=ar.idArtista;");
  while($row = mysqli_fetch_array($result)) {
+   $id=$row['album'];
         echo "<div class='col-md-3 col-sm-6 mb-4'>";
             echo "<div class='contenedor'>";
         echo "<img class='imagen' src='imagenes/"  . $row['imagen'] ."'>";
+        echo "<a href='producto.php?a=$id'>";
   echo "<div class='centrado'>" . $row['nombre'] . "</div>";
+echo "</a>";
     echo "</div>";
 
 echo "</div>";
@@ -184,15 +216,14 @@ echo "</div>";
 
 
 
-
+</div>
+</div>
 
 
     <!-- Footer -->
-    <div class="contenedor">
     <footer class="py-5 bg-dark">
 
         <p class="m-0 text-center text-white">Copyright &copy; Rythm 2018</p>
-      </div>
 
       <!-- /.container -->
     </footer>

@@ -13,6 +13,14 @@
   }
 
   session_start();
+  error_reporting(0);
+  $id=$_SESSION["id_usuario"];
+        $result = mysqli_query($con,"SELECT COUNT(*) hola FROM carrito where idUsuario=$id;");
+    while($row = mysqli_fetch_array($result)) {
+     $art=$row['hola'];
+    } 
+    $_SESSION["articulos"] = $art;
+    
 ?>
 
   <head>
@@ -22,6 +30,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" type="image/png" href="music.png" />
+    
     <title>Albumes</title>
 
     <!-- Bootstrap core CSS -->
@@ -55,6 +64,11 @@
             echo "Bienvenid@ " . $_SESSION['nombre'];
             echo "</a>";
             echo "</li>";
+            echo "<li class='nav-item '>";
+            echo "<a class='nav-link'  href='usuario.php' >";
+            echo "Perfil";
+            echo "</a>";
+            echo "</li>";
                 }
             ?>
             <li class="nav-item">
@@ -66,9 +80,24 @@
                     echo "<a class='nav-link' href='cerrar.php'>" . "Cerrar Sesión" . "</a>";
                 }?>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="carrito.php">Carrito </a>
-            </li>
+            <?php
+           if(isset($_SESSION['nombre'])){
+            echo '<li class="nav-item">
+              <a class="nav-link" href="carrito.php">Carrito  <span class="badge badge-primary">'  . $_SESSION["articulos"] .    '</span>
+            
+              </a>
+             
+            </li>';
+            }
+            else{
+              echo '<li class="nav-item">
+              <a class="nav-link" href="carrito.php">Carrito  <span class="badge badge-primary">  0     </span>
+            
+              </a>
+             
+            </li>';
+            }
+            ?>
             <li class="nav-item">
             <a class="nav-link" href="contacto.php">Contacto</a>
             </li>
@@ -143,9 +172,11 @@
 </div>
 <br><br>
 </div>
+
       <!-- Tarjetas de los Discos -->
       <div class="row text-center">
-          <!-- Ariana Grande -->
+      
+      
         
           <?php
               $result = mysqli_query($con,"SELECT imagen, a.nombre album, ar.nombre artista, precio, descripcion, a.idAlbum id, cantidad FROM album a, artista ar where a.idArtista=ar.idArtista;");
@@ -153,6 +184,7 @@
 
                 $id=$row['album'];
                 $idAlbum=$row['id'];
+                
         echo "<div class='col-lg-3 col-md-6 mb-4'>";
         echo "<div class='card'>"; 
         echo "<a href='producto.php?a=$id'>";
@@ -199,15 +231,15 @@
 
 
     </div>
-    
+    </div>
+    </div>
     <!-- /.container -->
 
+
+
     <!-- Footer -->
-    <div class="container">
     <footer class="py-5 bg-dark">
-      <div class="container">
         <p class="m-0 text-center text-white">Copyright &copy; Rythm 2018</p>
-      </div>
       <!-- /.container -->
     </footer>
 

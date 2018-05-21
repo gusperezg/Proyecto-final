@@ -11,6 +11,14 @@
   }
 
   session_start();
+  error_reporting(0);
+  $id=$_SESSION["id_usuario"];
+        $result = mysqli_query($con,"SELECT COUNT(*) hola FROM carrito where idUsuario=$id;");
+    while($row = mysqli_fetch_array($result)) {
+     $art=$row['hola'];
+    } 
+    $_SESSION["articulos"] = $art;
+    
 ?>
 
   <head>
@@ -52,6 +60,11 @@
             echo "Bienvenid@ " . $_SESSION['nombre'];
             echo "</a>";
             echo "</li>";
+            echo "<li class='nav-item '>";
+            echo "<a class='nav-link'  href='usuario.php' >";
+            echo "Perfil";
+            echo "</a>";
+            echo "</li>";
                 }
             ?>
             <li class="nav-item">
@@ -63,10 +76,24 @@
                     echo "<a class='nav-link' href='cerrar.php'>" . "Cerrar Sesión" . "</a>";
                 }?>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="carrito.php">Carrito 
-                  </a>
-            </li>
+            <?php
+           if(isset($_SESSION['nombre'])){
+            echo '<li class="nav-item">
+              <a class="nav-link" href="carrito.php">Carrito  <span class="badge badge-primary">'  . $_SESSION["articulos"] .    '</span>
+            
+              </a>
+             
+            </li>';
+            }
+            else{
+              echo '<li class="nav-item">
+              <a class="nav-link" href="carrito.php">Carrito  <span class="badge badge-primary">  0     </span>
+            
+              </a>
+             
+            </li>';
+            }
+            ?>
             <li class="nav-item active">
               <a class="nav-link" href="contacto.php">Contacto</a>
             </li>
@@ -151,6 +178,22 @@
 </div>
 </div>
   </form>
+
+  <?php
+error_reporting(0);
+$mail=$_POST['mail'];
+
+if($mail!=null){
+  echo  "<div class='alert alert-success'>";
+  echo "<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>";
+  echo "<strong>";
+  echo "Success!  ";
+  echo "</strong>";
+  echo "Se Enviaron Tus Comentarios.";
+echo "</div>";
+}
+
+?>
 
 </div>
 

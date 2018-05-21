@@ -54,6 +54,11 @@
             echo "Bienvenid@ " . $_SESSION['nombre'];
             echo "</a>";
             echo "</li>";
+            echo "<li class='nav-item '>";
+            echo "<a class='nav-link'  href='usuario.php' >";
+            echo "Perfil";
+            echo "</a>";
+            echo "</li>";
                 }
             ?>
             <li class="nav-item">
@@ -74,7 +79,7 @@
             <a class="nav-link" href="contacto.php">Contacto</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Administrador</a>
+              <a class="nav-link" href="redirecciona.php">Administrador</a>
             </li>
           </ul>
         </div>
@@ -85,6 +90,9 @@
 h3{
     color:#2874A6;
 }
+.jumbo{
+  background-color:#FDEBD0;
+}
 
 
 </style>
@@ -93,16 +101,14 @@ h3{
 <div class="container">
 
 <div class="row">
-<div class="col-lg-2">
 
-</div>
 <div class="jumbotron">
-<center>
-  <div class="col-lg-9">
+
+  <div class="col-lm-8">
     <h1>Se realizó la compra Correctamente</h1>
-    <img src="imagenes/palomita.png" width=130px>
+    <center><img src="imagenes/palomita.png" width=130px></center>
     <br><br>
-    <h3>Articulos Comprados</h3>
+    <center><h3>Articulos Comprados</h3></center>
     <br>
     <?php
     error_reporting(0);
@@ -154,15 +160,34 @@ h3{
 
  echo "<tr><td></td><td></td><td></td><td></td><td>TOTAL</td><td> $" . $total . " MX</td></tr>";
  echo "</table>";
+ echo "<br>";
 
+      
 
     ?>
 
    <center> <a href="index.php"><button  class="btn btn-success">Regresar</button></a> </center>
+   
     </div>
-</center>
+   
 </div>
+</div>
+<div class="col-lm-4">
+<div class="jumbotron jumbo">
 
+<?php
+$id=$_SESSION['id_usuario'];
+$result = mysqli_query($con,"SELECT nombre, correo, contra, nacimiento, tarjeta, direccion FROM usuarios where idUsuarios=$id;");
+while($row = mysqli_fetch_array($result)) {
+  echo "<h4>Gracias por su compra </h4>";
+  echo "<h3>" . $row['nombre'] . "</h3>";
+  echo "<h4>Su pedido será mandado a:  </h4>";
+  echo "<h3>" . $row['direccion'] . "</h3>";
+}
+
+?>
+</div>
+</div>
 
 
 </div>
