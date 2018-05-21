@@ -141,6 +141,14 @@
     padding-left:50%;
     padding-right:45%;
 }
+.jum{
+  color:white;
+  background: linear-gradient(to bottom right, blue, green);
+}
+.jumy{
+  color:white;
+  background: linear-gradient(to right, blue, green);
+}
 
 </style>
 
@@ -208,6 +216,26 @@ echo "</div>";
 
     </div>
 
+</div>
+<br>
+<div class="row">
+<div class="col-lg-7">
+<div class="jumbotron jum">
+<h2>Acerca de</h1>
+<h5>Somos una tienda vanguardista en la que podrás encontrar todo tipo de música, inició en el año de 1996 y hasta hoy
+hemos revolucionado la manera en la que la música pasa de persona en persona, en rythm te ofrecemos todos los estilos músicales 
+y recomendaciones de albumes para que tu biblioteca músical sea tan amplia como nuestro catalogo de productos.</h5>
+</div>
+</div>
+<div class="col-lg-5">
+<div class="jumbotron jumy">
+<h2>Información</h1>
+<h5>Dirección: Avenida Universidad Anáhuac 46, Lomas Anahuac, 52786 Huixquilucan, MEX<nr>
+Teléfono: 01 55 5627 0210<br>
+Fundación: 1996<br>
+Creador: Gustavo Pérez</h5>
+</div>
+</div>
 </div>
 </div>
 <br><br>

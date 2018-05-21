@@ -11,6 +11,14 @@
 
   session_start();
 
+  error_reporting(0);
+  $id=$_SESSION["id_usuario"];
+        $result = mysqli_query($con,"SELECT COUNT(*) hola FROM carrito where idUsuario=$id;");
+    while($row = mysqli_fetch_array($result)) {
+     $art=$row['hola'];
+    } 
+    $_SESSION["articulos"] = $art;
+
 ?>
    
   <head>
@@ -69,11 +77,24 @@
                     echo "<a class='nav-link' href='cerrar.php'>" . "Cerrar Sesión" . "</a>";
                 }?>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="carrito.php">Carrito 
+            <?php
+           if(isset($_SESSION['nombre'])){
+            echo '<li class="nav-item">
+              <a class="nav-link" href="carrito.php">Carrito  <span class="badge badge-primary">'  . $_SESSION["articulos"] .    '</span>
+            
               </a>
              
-            </li>
+            </li>';
+            }
+            else{
+              echo '<li class="nav-item">
+              <a class="nav-link" href="carrito.php">Carrito  <span class="badge badge-primary">  0     </span>
+            
+              </a>
+             
+            </li>';
+            }
+            ?>
             <li class="nav-item">
             <a class="nav-link" href="contacto.php">Contacto</a>
             </li>
@@ -111,9 +132,12 @@
   label{
     font-weight: bold;
   }
+  .jumbotrony{
+    background: linear-gradient(-90deg, #58D68D, #AED6F1);
+  }
   .jumbotrons{
-
-background-color:#D4E6F1 !important;
+color:white;
+background-color:black;
 }
 
 </style>
@@ -139,7 +163,7 @@ background-color:#D4E6F1 !important;
   <div class="jumbotron jumbotrons">
   <h2>Datos del Usuario</h2>
   </div>
-      <div class="jumbotron">
+      <div class="jumbotron jumbotrony">
     
   
     <?php

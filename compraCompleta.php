@@ -104,7 +104,7 @@ h3{
 
 <div class="jumbotron">
 
-  <div class="col-lm-8">
+  <div class="col-lg-12">
     <h1>Se realizó la compra Correctamente</h1>
     <center><img src="imagenes/palomita.png" width=130px></center>
     <br><br>
@@ -171,7 +171,7 @@ h3{
     </div>
    
 </div>
-</div>
+<br><br>
 <div class="col-lm-4">
 <div class="jumbotron jumbo">
 
@@ -186,6 +186,8 @@ while($row = mysqli_fetch_array($result)) {
 }
 
 ?>
+   
+</div>
 </div>
 </div>
 
